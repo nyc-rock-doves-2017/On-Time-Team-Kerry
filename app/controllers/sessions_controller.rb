@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   end
 
   def new
+    render layout: false
   end
 
   def create
@@ -36,10 +37,11 @@ class SessionsController < ApplicationController
 
   def destroy
     session.destroy
-    redirect_to root
+    redirect_to root_path
   end
 
   def newsignup
+    render layout: false
   end
 
   def createsignup
@@ -48,6 +50,7 @@ class SessionsController < ApplicationController
   end
 
   def newregistration
+    render layout: false
     if session[:type] == "merchant"
       @merchant = Merchant.new
     else
