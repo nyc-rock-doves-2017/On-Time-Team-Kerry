@@ -40,18 +40,51 @@ class SessionsController < ApplicationController
   end
 
   def newsignup
-
   end
 
   def createsignup
+    session[:type] = params[:type]
+    render action: :newregistration
   end
 
-  def newregisration
+  def newregistration
+    if session[:type] == "merchant"
+      @merchant = Merchant.new
+    else
+      @contractor = Contractor.new
+    end
   end
 
-  def createregisration
+  def createregistration
+    if session[:type] == "merchant"
+      @merchant = Merchant.new(merchant_params)
+      if @merchant.save
+        session[:user_id] = @merchant.id
+        redirect_to merchant_path(@merchant)
+      else
+        @errors = @merchant.errors.full_messages
+        render status: 422, action: :newregistration
+      end
+    else
+      @contractor = Contractor.new(contractor_params)
+      if @contractor.save
+        session[:user_id] = @contractor.id
+        redirect_to contractor_path(@contractor)
+      else
+        @errors = @contractor.errors.full_messages
+        render status: 422, action: :newregistration
+      end
+    end
   end
 
+  private
 
+  def merchant_params
+    params.require(:merchant).permit(:name, :address, :email, :password)
+  end
+
+  def contractor_params
+    params.require(:contractor).permit(:name, :email, :password, :status)
+  end
 
 end
