@@ -5,7 +5,7 @@ class ContractorsController < ApplicationController
   end
 
   def create
-    @contractor = Contractor.new(merchant_params)
+    @contractor = Contractor.new(contractor_params)
     if @contractor.save
       redirect_to @contractor
     else
