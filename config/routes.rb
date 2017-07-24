@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root 'sessions#home'
 
-  resources :merchants, :contractors, only: [:show]
+  resources :contractors, only: [:show]
+  resources :merchants do
+    resources :orders, only: [:index, :new, :create, :update, :show]
+  end
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
@@ -11,4 +14,7 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#createsignup'
   get '/registration' => 'sessions#newregistration'
   post '/registration' => 'sessions#createregistration'
+
+  get '/open_orders' => 'orders#index'
+
 end
