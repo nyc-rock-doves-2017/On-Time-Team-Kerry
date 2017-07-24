@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'sessions#home'
-  
-  resources :merchants, only: [:new, :create, :show]
-  
+
+  resources :merchants, only: [:show]
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'

@@ -1,8 +1,33 @@
 <h2> Registration </h2>
+<% if @errors %>
+  <ul>
+    <% @errors.each do |error| %>
+      <li><%= error %></li>
+  </ul>
+  <% end %>
+<% end  %>
 
-<form class="form" action="/login" method="post">
+<% if session[:type] == "merchant" %>
 
-  <input type="text" name="email" value="" placeholder="email">
-  <input type="password" name="password" value="" placeholder="password">
-  <input type="submit" value="Login">
+
+<form class="form" action="/registration" method="post">
+  <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+  <input type="text" name="merchant[name]" value="" placeholder="name">
+  <input type="text" name="merchant[email]" value="" placeholder="email">
+  <input type="text" name="merchant[address]" value="" placeholder="address">
+  <input type="password" name="merchant[password]" value="" placeholder="password">
+  <input type="submit" value="Register">
 </form>
+
+<% else %>
+
+<form class="form" action="/registration" method="post">
+  <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+  <input type="text" name="contractor[name]" value="" placeholder="name">
+  <input type="text" name="contractor[email]" value="" placeholder="email">
+  <input type="password" name="contractor[password]" value="" placeholder="password">
+  <input type="hidden" name="contractor[status]" value="true">
+  <input type="submit" value="Register">
+</form>
+
+<% end %>
