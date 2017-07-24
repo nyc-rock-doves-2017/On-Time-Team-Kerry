@@ -18,8 +18,17 @@ ActiveRecord::Schema.define(version: 20170724190304) do
   create_table "contractors", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
     t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merchants", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
