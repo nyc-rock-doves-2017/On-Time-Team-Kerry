@@ -7,7 +7,8 @@ module MerchantsHelper
       diff = order.pick_up_time - order.claim_time
       total_diff += diff
     end
-    total_diff / num_of_orders
+    average_diff = total_diff / num_of_orders
+    (average_diff/60).floor
   end
 
   def average_pick_up_to_delivery_time
@@ -17,7 +18,8 @@ module MerchantsHelper
       diff = order.delivery_time - order.pick_up_time
       total_diff += diff
     end
-    total_diff / num_of_orders
+    average_diff = total_diff / num_of_orders
+    (average_diff/60).floor
   end
 
   def average_claim_to_delivery_time
@@ -27,7 +29,8 @@ module MerchantsHelper
       diff = order.delivery_time - order.claim_time
       total_diff += diff
     end
-    total_diff / num_of_orders
+    average_diff = total_diff / num_of_orders
+    (average_diff/60).floor
   end
 
 end
