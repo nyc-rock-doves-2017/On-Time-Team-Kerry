@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
   def create
     @merchant = Merchant.find_by(email: params[:email])
-    @contractor = Contrator.find_by(email: params[:email])
+    @contractor = Contractor.find_by(email: params[:email])
       if @merchant
         if @merchant.authenticate(params[:password])
           session[:user_id] = @merchant.id
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
   end
 
   def newsignup
-    
+
   end
 
   def createsignup
