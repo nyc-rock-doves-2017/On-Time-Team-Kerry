@@ -2,7 +2,7 @@ Contractor.delete_all
 Merchant.delete_all
 
 20.times do
-  Contractor.create!(
+  Contractor.create(
     name: Faker::Ancient.primordial,
     email: Faker::Internet.email,
     password: "password"
@@ -10,7 +10,7 @@ Merchant.delete_all
 end
 
 10.times do
-  Merchant.create!(
+  Merchant.create(
     name: Faker::Ancient.god,
     address: Faker::Lorem.sentences,
     email: Faker::Internet.email,
