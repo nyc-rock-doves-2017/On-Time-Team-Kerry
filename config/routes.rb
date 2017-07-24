@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'sessions#home'
 
-  resources :merchants, only: [:show]
+  resources :merchants, :contractors, only: [:show]
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
