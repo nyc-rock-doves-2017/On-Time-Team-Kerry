@@ -9,8 +9,4 @@ class CreateContractors < ActiveRecord::Migration[5.1]
       t.timestamps
     end
   end
-
-  def up
-    change_column :contractors, :status, :boolean, default: true
-  end
 end
