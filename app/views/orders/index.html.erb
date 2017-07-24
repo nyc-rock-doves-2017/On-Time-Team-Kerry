@@ -1,0 +1,26 @@
+<h2>Orders Available for Delivery</h2>
+<table>
+  <tr>
+    <th>Merchant</th>
+    <th>Merchant Address</th>
+    <th>Delivery Address</th>
+    <th>Claim Delivery</th>
+  </tr>
+  <% @open_orders.each do |order| %>
+    <% order_merchant = Merchant.find_by(id: order.merchant_id) %>
+    <tr>
+      <td><%= order_merchant.name %></td>
+      <td><%= order_merchant.address %></td>
+      <td><%= order.destination %></td>
+      <td>
+        <form action="/merchants/<%= order_merchant.id %>/orders/<%= order.id %>" method="post">
+          <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+          <input type="hidden" name="_method" value="patch"/>
+          <input type="hidden" name="orders[contractor_id]" value="<%= current_user.id %>"/>
+          <input type="hidden" name="orders[claim_time]" value="<%Time.new %>"/>
+          <input type="submit" value="Claim"/>
+        </form>
+        </td>
+    </tr>
+  <% end %>
+</table>

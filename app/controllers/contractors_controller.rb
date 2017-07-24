@@ -1,5 +1,8 @@
 class ContractorsController < ApplicationController
 
+  def index
+  end
+
   def new
     @contractor = Contractor.new
   end
@@ -7,7 +10,7 @@ class ContractorsController < ApplicationController
   def create
     @contractor = Contractor.new(contractor_params)
     if @contractor.save
-      redirect_to @contractor
+      redirect_to open_orders_path
     else
       @errors = @contractor.errors.full_messages
       render 'new'
@@ -15,12 +18,11 @@ class ContractorsController < ApplicationController
   end
 
   def show
-    @contractor = Contrator.find(params[:id])
+    @contractor = Contractor.find_by(id: params[:id])
   end
 
   private
     def contractor_params
       params.require(:contractor).permit(:name, :email, :password, :status)
     end
-
 end
