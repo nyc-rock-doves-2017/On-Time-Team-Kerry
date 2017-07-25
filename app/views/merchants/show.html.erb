@@ -17,8 +17,8 @@
 <% merchant_orders = merchant_orders.first(5) %>
 <h3>Recent Order History</h3>
 <% if merchant_orders.length > 0 %>
-  <table>
-    <tr>
+  <table class="table table-condensed table-bordered table-responsive" >
+    <tr class="success">
       <th>Order Date</th>
       <th>Contractor Name</th>
       <th>Claim to Pick Up Time</th>
@@ -30,8 +30,8 @@
       <tr>
         <td><%= order.created_at.strftime('%B %d, %Y') %></td>
         <td><%= order.contractor.name %></td>
-        <td><%= order.claim_to_pick_up_time %> minutes </td>
-        <td><%= order.pick_up_to_delivery_time %> minutes </td>
+        <td ><%= order.claim_to_pick_up_time %> minutes </td>
+        <td ><%= order.pick_up_to_delivery_time %> minutes </td>
         <td><%= order.claim_to_delivery_time %> minutes </td>
         <% if order.claim_time == nil && order.pick_up_time == nil %>
           <td>

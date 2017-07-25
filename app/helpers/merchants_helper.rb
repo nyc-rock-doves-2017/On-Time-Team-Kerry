@@ -2,8 +2,8 @@ module MerchantsHelper
 
   def average_times_by_contractor
     hash = {}
-    Contractor.all.each do |con|
-        hash[con.name] = con.orders.select { |o| o.merchant == @merchant }
+    Contractor.all.each do |contractor|
+        hash[contractor.name] = contractor.orders.select { |order| order.merchant == @merchant }
     end
     hash.delete_if { |k, v| v.empty? }
     other_hash = {}

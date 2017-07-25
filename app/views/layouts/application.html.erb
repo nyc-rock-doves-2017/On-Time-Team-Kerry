@@ -6,22 +6,26 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-  <nav>
-    <div class="nav-wrapper">
-      <h1>OnTime</h1>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <% if logged_in? && session[:type] == "merchant" %>
-          <li><a href='<%= merchant_path(current_user.id) %>' >Dashboard</a></li>
-          <li><a href="/logout">Logout</a></li>
-        <% else logged_in? && session[:type] == "contractor" %>
-          <li><a href='/open_orders'>Dashboard</a></li>
-          <li><a href="/logout">Logout</a></li>
-        <% end %>
-      </ul>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  </head>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="nav-wrapper navbar-header">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <% if logged_in? && session[:type] == "merchant" %>
+            <a href='<%= merchant_path(current_user.id) %>' >Dashboard</a>
+          <a href="/logout">Logout</a>
+          <% else logged_in? && session[:type] == "contractor" %>
+            <li><a href='/open_orders'>Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+          <% end %>
+        </ul>
+      </div>
+
     </div>
   </nav>
   <body>
+      <h1>On Time</h1>
     <%= yield %>
   </body>
 </html>
