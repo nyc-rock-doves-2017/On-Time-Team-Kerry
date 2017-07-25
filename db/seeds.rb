@@ -27,14 +27,14 @@ end
   )
 end
 
-25.times do
+40.times do
   mercs = Merchant.all
   num = mercs.length
   mercs[0..num].sample.orders.create(
     destination: Faker::Address.street_address,
     claim_time: Time.now,
     pick_up_time: Time.now + rand(4..8).minutes,
-    delivery_time: Time.now + rand(15..25).minutes,
+    delivery_time: Time.now + rand(15..30).minutes,
     contractor: Contractor.all.sample
   )
 end
