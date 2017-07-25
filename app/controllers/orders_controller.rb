@@ -28,7 +28,11 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: params[:id])
     @order.update_attributes(update_order_params)
     if @order.save
-      redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+      if session[:type] == "contractor"
+        redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+      else
+        redirect_to "/merchants/#{@order.merchant_id}/full_merchant_history"
+      end
     else
       @errors = @order.errors.full_messages
       render status: 422, action: :show

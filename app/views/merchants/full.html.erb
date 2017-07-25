@@ -1,69 +1,155 @@
 <h2><%= @merchant.name %> Order History</h2>
-<h3>Unclaimed Orders</h3>
-<% unclaimed_orders = @merchant.orders.select { |o| o.claim_time == nil } %>
-<table>
-  <tr>
-    <th>Order Date</th>
-    <th>Order Destination</th>
-    <th>Contractor Name</th>
-    <th>Claim to Pick Up Time</th>
-    <th>Pick Up to Delivery Time</th>
-    <th>Total Time</th>
-  </tr>
-  <% if unclaimed_orders.length == 0 %>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <% else %>
-    <% unclaimed_orders.each do |order| %>
-      <tr>
-        <td><%= order.created_at.strftime('%B %d, %Y') %></td>
-        <td><%= order.destination %></td>
-        <td><%= order.contractor.name %></td>
-        <td><%= order.claim_to_pick_up_time %> minutes </td>
-        <td><%= order.pick_up_to_delivery_time %> minutes </td>
-        <td><%= order.claim_to_delivery_time %> minutes </td>
-      </tr>
-      <% end %>
-  <% end %>
-</table>
-
-<h3>Orders Awaiting Pickup</h3>
-<!-- BELOW DOESNT WORK YET  -->
-<% unclaimed_orders = @merchant.orders.select { |o| o.claim_time == nil } %>
-<table>
-  <tr>
-    <th>Order Date</th>
-    <th>Order Destination</th>
-    <th>Contractor Name</th>
-    <th>Claim to Pick Up Time</th>
-    <th>Pick Up to Delivery Time</th>
-    <th>Total Time</th>
-  </tr>
-  <% if unclaimed_orders.length == 0 %>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <% else %>
-    <% unclaimed_orders.each do |order| %>
-      <tr>
-        <td><%= order.created_at.strftime('%B %d, %Y') %></td>
-        <td><%= order.destination %></td>
-        <td><%= order.contractor.name %></td>
-        <td><%= order.claim_to_pick_up_time %> minutes </td>
-        <td><%= order.pick_up_to_delivery_time %> minutes </td>
-        <td><%= order.claim_to_delivery_time %> minutes </td>
-      </tr>
-      <% end %>
-  <% end %>
-</table>
+<div>
+  <h3>Unclaimed Orders</h3>
+  <p>Any order that you have posted that has not been claimed by a contractor.</p>
+  <% unclaimed_orders = @merchant.orders.select { |o| o.claim_time == nil } %>
+  <table>
+    <tr>
+      <th>Order Date</th>
+      <th>Order Destination</th>
+      <th>Contractor Name</th>
+      <th>Claim to Pick Up Time</th>
+      <th>Pick Up to Delivery Time</th>
+      <th>Total Time</th>
+    </tr>
+    <% if unclaimed_orders.length == 0 %>
+    <tr>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <% else %>
+      <% unclaimed_orders.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+          <td><%= order.destination %></td>
+          <td><%= order.contractor.name %></td>
+          <td><%= order.claim_to_pick_up_time %> minutes </td>
+          <td><%= order.pick_up_to_delivery_time %> minutes </td>
+          <td><%= order.claim_to_delivery_time %> minutes </td>
+        </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>
+<div>
+  <h3>Orders Awaiting Pickup</h3>
+  <p>Any order that has been claimed by a contractor but has not yet been picked up.</p>
+  <% awaiting_pickup = @merchant.orders.select { |o| o.claim_time != nil && o.pick_up_time == nil  } %>
+  <table>
+    <tr>
+      <th>Mark as Picked Up</th>
+      <th>Order Date</th>
+      <th>Order Destination</th>
+      <th>Contractor Name</th>
+      <th>Claim to Pick Up Time</th>
+      <th>Pick Up to Delivery Time</th>
+      <th>Total Time</th>
+    </tr>
+    <% if awaiting_pickup.length == 0 %>
+    <tr>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <% else %>
+      <% awaiting_pickup.each do |order| %>
+        <tr>
+          <td>
+            <form action="/merchants/<%= @merchant.id %>/orders/<%= order.id %>"method="post">
+              <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+              <input type="hidden" name="_method" value="patch"/>
+              <input type="hidden" name="orders[pick_up_time]" value="<%=Time.new %>"/>
+              <input type="submit" value="Picked Up"/>
+            </form>
+          </td>
+          <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+          <td><%= order.destination %></td>
+          <td><%= order.contractor.name %></td>
+          <td><%= order.claim_to_pick_up_time %> minutes </td>
+          <td><%= order.pick_up_to_delivery_time %> minutes </td>
+          <td><%= order.claim_to_delivery_time %> minutes </td>
+        </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>
+<div>
+  <h3>Orders Out for Delivery</h3>
+  <p>Any order that has been picked up, but not yet delivered.</p>
+  <p> Note: The contractor is responsible for marking items as delivered.</p>
+  <% awaiting_delivery = @merchant.orders.select { |o| o.claim_time != nil && o.pick_up_time != nil && o.delivery_time == nil } %>
+  <table>
+    <tr>
+      <th>Order Date</th>
+      <th>Order Destination</th>
+      <th>Contractor Name</th>
+      <th>Claim to Pick Up Time</th>
+      <th>Pick Up to Delivery Time</th>
+      <th>Total Time</th>
+    </tr>
+    <% if awaiting_delivery.length == 0 %>
+    <tr>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <% else %>
+      <% awaiting_delivery.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+          <td><%= order.destination %></td>
+          <td><%= order.contractor.name %></td>
+          <td><%= order.claim_to_pick_up_time %> minutes </td>
+          <td><%= order.pick_up_to_delivery_time %> minutes </td>
+          <td><%= order.claim_to_delivery_time %> minutes </td>
+        </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>
+<div>
+  <h3>Completed Orders</h3>
+  <% comp_orders = @merchant.orders.select { |o| o.delivery_time != nil } %>
+  <table>
+    <tr>
+      <th>Order Date</th>
+      <th>Order Destination</th>
+      <th>Contractor Name</th>
+      <th>Claim to Pick Up Time</th>
+      <th>Pick Up to Delivery Time</th>
+      <th>Total Time</th>
+    </tr>
+    <% if comp_orders.length == 0 %>
+    <tr>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <% else %>
+      <% comp_orders.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+          <td><%= order.destination %></td>
+          <td><%= order.contractor.name %></td>
+          <td><%= order.claim_to_pick_up_time %> minutes </td>
+          <td><%= order.pick_up_to_delivery_time %> minutes </td>
+          <td><%= order.claim_to_delivery_time %> minutes </td>
+        </tr>
+        <% end %>
+    <% end %>
+  </table>
+</div>
