@@ -35,7 +35,7 @@ end
 #
 # # Orders that have been claimed but have not been picked up
 # Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Three", claim_time: Time.new)
-# Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Four", claim_time: Time.new)
+# Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Four", claim_time: Time.new
 
 # Orders that have been claimed, picked up, but not delivered
 
