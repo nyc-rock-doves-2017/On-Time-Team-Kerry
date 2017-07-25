@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OnTimeKerry</title>
+    <title>OnTime - Delivery Management</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,7 +9,7 @@
   </head>
   <nav>
     <div class="nav-wrapper">
-      <h1>On Time</h1>
+      <h1>OnTime</h1>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <% if logged_in? && session[:type] == "merchant" %>
           <li><a href='<%= merchant_path(current_user.id) %>' >Dashboard</a></li>
