@@ -13,6 +13,7 @@
 <% end %>
 
 <% merchant_orders = Order.all.select { |o| o.merchant_id == @merchant.id } %>
+<% merchant_orders.last(5) %>
 <h3>Recent Order History</h3>
 <% if merchant_orders.length > 0 %>
   <table>
