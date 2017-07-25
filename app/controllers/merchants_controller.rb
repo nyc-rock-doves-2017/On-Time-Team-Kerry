@@ -18,6 +18,10 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:id])
   end
 
+  def full 
+    @merchant = Merchant.find(params[:id])
+  end
+
   private
     def merchant_params
       params.require(:merchant).permit(:name, :address, :email, :password)

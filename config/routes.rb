@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post '/registration' => 'sessions#createregistration'
 
   get '/open_orders' => 'orders#index'
-  get '/bad_performance' => 'contractors#bad_performance'
+  
+  get '/merchants/:id/full_merchant_history' => 'merchants#full'
 
+  get '/bad_performance' => 'contractors#bad_performance'
 end
