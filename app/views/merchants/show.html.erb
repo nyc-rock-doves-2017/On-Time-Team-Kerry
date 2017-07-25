@@ -5,9 +5,26 @@
 <h3>Average Delivery Times</h3>
 <% merchant_orders = @merchant.orders %>
 <% if merchant_orders.length != 0 %>
-  <p>Average Time: Claim to Pickup: <%= average_claim_to_pick_up_time %> minutes</p>
-  <p>Average Time: Pickup to Delivery: <%= average_pick_up_to_delivery_time %> minutes</p>
-  <p>Average Time: Claim to Delivery: <%= average_claim_to_delivery_time %> minutes</p>
+
+
+
+  <table>
+    <tr>
+      <th>Average Time: Claim to Pickup</th>
+      <th>Average Time: Pickup to Delivery</th>
+      <th>Average Time: Claim to Delivery</th>
+    </tr>
+    <tr>
+      <td><span id="power-gauge-one" class="power-gauge"></span></td>
+      <td><span id="power-gauge-two" class="power-gauge"></span></td>
+      <td><span id="power-gauge-three" class="power-gauge"></span></td>
+    </tr>
+    <tr id="data-row">
+      <td id="data-one"><%= average_claim_to_pick_up_time %> minutes</td>
+      <td id="data-two"><%= average_pick_up_to_delivery_time %> minutes</td>
+      <td id="data-three"><%= average_claim_to_delivery_time %> minutes</td>
+    </tr>
+  </table>
 <% else %>
   <p>You do not have any completed orders.</p>
 <% end %>
