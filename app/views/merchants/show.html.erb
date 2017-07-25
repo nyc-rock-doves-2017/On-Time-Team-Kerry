@@ -1,12 +1,40 @@
-<h1><%= @merchant.name %></h1>
+<h2><%= @merchant.name %> Dashboard</h2>
 
-<a href="merchants/<%= current_user.id %>/orders/new">Create Order</a>
+<a href="merchants/<%= current_user.id %>/orders/new"><button>Enter New Order for Delivery</button></a>
 
-<h3>Average delivery times</h3>
-<p>Claim to pickup: <%= average_claim_to_pick_up_time %></p>
-<p>Pickup to delivery: <%= average_pick_up_to_delivery_time %></p>
-<p>Claim to delivery: <%= average_claim_to_delivery_time %></p>
+<h3>Average Delivery Times</h3>
+<% merchant_orders = Order.all.select { |o| o.delivery_time != nil} %>
+<% if merchant_orders.length > 0 %>
+  <p>Average Time: Claim to Pickup: <%= average_claim_to_pick_up_time %> minutes</p>
+  <p>Average Time: Pickup to Delivery: <%= average_pick_up_to_delivery_time %> minutes</p>
+  <p>Average Time: Claim to Delivery: <%= average_claim_to_delivery_time %> minutes</p>
+<% else %>
+  <p>You do not have any completed orders.</p>
+<% end %>
 
-<h3>Table of Order History</h3>
+<% merchant_orders = Order.all.select { |o| o.merchant_id == @merchant.id } %>
+<h3>Recent Order History</h3>
+<% if merchant_orders.length > 0 %>
+  <table>
+    <tr>
+      <th>Order Date</th>
+      <th>Contractor Name</th>
+      <th>Claim to Pick Up Time</th>
+      <th>Pick Up to Delivery Time</th>
+      <th>Total Time</th>
+    </tr>
+    <% merchant_orders.each do |order| %>
+      <tr>
+        <td><%= order.created_at.strftime('%B %d, %Y') %></td>
+        <td><%= order.contractor.name %></td>
+        <td><%= order.claim_to_pick_up_time %> minutes </td>
+        <td><%= order.pick_up_to_delivery_time %> minutes </td>
+        <td><%= order.claim_to_delivery_time %> minutes </td>
+      </tr>
+      <% end %>
+  </table>
+<% else %>
+  <p>You do not have any orders to display</p>
+<% end %>
 
 <h3>Nice List</h3>
