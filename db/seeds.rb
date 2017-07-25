@@ -32,7 +32,10 @@ end
   num = mercs.length
   mercs[0..num].sample.orders.create(
     destination: Faker::Address.street_address,
-    claim_time: Time.now
+    claim_time: Time.now,
+    pick_up_time: Time.now + rand(6..12).minutes,
+    delivery_time: Time.now + rand(17..30).minutes,
+    contractor: Contractor.all.sample
   )
 end
 
