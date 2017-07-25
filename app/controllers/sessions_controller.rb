@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
           redirect_to merchant_path(@merchant)
         else
           @errors = ["Incorrect email or password"]
-          render status: 403, action: :new
+          render status: 403, action: :new, layout: false
         end
       elsif @contractor
         if @contractor.authenticate(params[:password])
@@ -27,11 +27,11 @@ class SessionsController < ApplicationController
           redirect_to open_orders_path
         else
           @errors = ["Incorrect email or password"]
-          render status: 403, action: :new
+          render status: 403, action: :new, layout: false
         end
       else
-        @errors = ["Input email and password"]
-        render status: 422, action: :new
+        @errors = ["Account not found. Input email and password."]
+        render status: 422, action: :new, layout: false
       end
   end
 
@@ -46,7 +46,7 @@ class SessionsController < ApplicationController
 
   def createsignup
     session[:type] = params[:type]
-    render action: :newregistration
+    render action: :newregistration, layout: false
   end
 
   def newregistration
@@ -66,7 +66,7 @@ class SessionsController < ApplicationController
         redirect_to merchant_path(@merchant)
       else
         @errors = @merchant.errors.full_messages
-        render status: 422, action: :newregistration
+        render status: 422, action: :newregistration, layout: false
       end
     else
       @contractor = Contractor.new(contractor_params)
@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
         redirect_to open_orders_path
       else
         @errors = @contractor.errors.full_messages
-        render status: 422, action: :newregistration
+        render status: 422, action: :newregistration, layout: false
       end
     end
   end

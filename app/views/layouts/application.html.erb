@@ -9,14 +9,14 @@
   </head>
   <nav>
     <div class="nav-wrapper">
-      <h1> On Time</h1>
+      <h1>On Time</h1>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <% if logged_in? && session[:type] == "merchant" %>
-        <li><a href='<%= merchant_path(current_user.id) %>' >Dashboard</a></li>
-        <li><a href="/logout">Logout</a></li>
+          <li><a href='<%= merchant_path(current_user.id) %>' >Dashboard</a></li>
+          <li><a href="/logout">Logout</a></li>
         <% else logged_in? && session[:type] == "contractor" %>
-        <li><a href='/open_orders'>Dashboard</a></li>
-        <li><a href="/logout">Logout</a></li>
+          <li><a href='/open_orders'>Dashboard</a></li>
+          <li><a href="/logout">Logout</a></li>
         <% end %>
       </ul>
     </div>

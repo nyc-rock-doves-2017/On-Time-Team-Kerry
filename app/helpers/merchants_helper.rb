@@ -10,6 +10,8 @@ module MerchantsHelper
       end
       average_diff = total_diff / com_orders.length
       (average_diff/60).floor
+    else
+      "---"
     end
   end
 
@@ -23,7 +25,9 @@ module MerchantsHelper
         end
         average_diff = total_diff / com_orders.length
         (average_diff/60).floor
-      end
+    else
+      "---"
+    end
   end
 
   def average_claim_to_delivery_time
@@ -36,6 +40,8 @@ module MerchantsHelper
         end
         average_diff = total_diff / com_orders.length
         (average_diff/60).floor
-      end
+    else
+      "---"
+    end
   end
 end
