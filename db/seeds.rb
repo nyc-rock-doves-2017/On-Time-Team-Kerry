@@ -20,13 +20,22 @@ end
   )
 end
 
-# Orders that have not been claimed
-Order.create(merchant_id: 1, contractor_id: 2, destination: "Order One")
-Order.create(merchant_id: 1, contractor_id: 3, destination: "Order Two")
+25.times do
+  mercs = Merchant.all
+  num = mercs.length
+  mercs[0..num].sample.orders.create(
+    destination: Faker::Address.street_address,
+    claim_time: Time.now
+  )
+end
 
-# Orders that have been claimed but have not been picked up
-Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Three", claim_time: Time.new, pick_up_time: Time.new+rand(100), delivery_time: Time.new+rand(400))
-Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Four", claim_time: Time.new)
+# Orders that have not been claimed
+# Order.create(merchant_id: 1, contractor_id: 2, destination: "Order One")
+# Order.create(merchant_id: 1, contractor_id: 3, destination: "Order Two")
+#
+# # Orders that have been claimed but have not been picked up
+# Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Three", claim_time: Time.new)
+# Order.create(merchant_id: 1, contractor_id: 2, destination: "Order Four", claim_time: Time.new
 
 # Orders that have been claimed, picked up, but not delivered
 
