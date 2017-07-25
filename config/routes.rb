@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   post '/registration' => 'sessions#createregistration'
 
   get '/open_orders' => 'orders#index'
+  get '/bad_performance' => 'contractors#bad_performance'
 
 end
