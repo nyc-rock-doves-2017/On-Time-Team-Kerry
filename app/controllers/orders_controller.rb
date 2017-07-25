@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @merchant = Merchant.find_by(id: params[:merchant_id])
     @order = Order.new
   end
 
@@ -36,7 +37,7 @@ class OrdersController < ApplicationController
 
   private
     def order_params
-      params.require(:orders).permit(:merchant_id, :destination)
+      params.require(:orders).permit(:merchant_id, :destination, :contractor_id)
     end
 
     def update_order_params

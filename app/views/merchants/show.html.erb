@@ -1,6 +1,6 @@
 <h2><%= @merchant.name %> Dashboard</h2>
 
-<a href="merchants/<%= current_user.id %>/orders/new"><button>Enter New Order for Delivery</button></a>
+<a href="<%= current_user.id %>/orders/new"><button>Enter New Order for Delivery</button></a>
 
 <h3>Average Delivery Times</h3>
 <% merchant_orders = Order.all.select { |o| o.delivery_time != nil} %>
