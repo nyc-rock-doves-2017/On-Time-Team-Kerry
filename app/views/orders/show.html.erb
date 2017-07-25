@@ -1,2 +1,21 @@
-<h1>Show</h1>
-<p> Add logic for both the merchant and the contractor because this is the page that is re-rerenderd when any sort of update is made</p>
+<h2>Current Order Details</h2>
+
+<ul>
+  <li>Merchant: <%= @order.merchant.name %></li>
+  <li>Merchant Address: <%= @order.merchant.address %></li>
+  <li>Destination Address: <%= @order.destination %></li>
+  <% if @order.pick_up_time != nil && @order.delivery_time == nil %>
+    <li>
+      <form action="/merchants/<%= @order.merchant_id %>/orders/<%= @order.id %>"method="post">
+        <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+        <input type="hidden" name="_method" value="patch"/>
+        <input type="hidden" name="orders[delivery_time]" value="<%=Time.new %>"/>
+        <input type="submit" value="Mark As Delivered"/>
+      </form>
+    </li>
+    <% elsif @order.pick_up_time == nil && @order.delivery_time == nil %>
+    <li>
+      Order awaiting pick up - contact merchant is this is not correct.
+    </li>
+  <% end %>
+</ul>

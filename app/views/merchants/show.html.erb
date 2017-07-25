@@ -24,6 +24,7 @@
       <th>Claim to Pick Up Time</th>
       <th>Pick Up to Delivery Time</th>
       <th>Total Time</th>
+      <th>Mark as Picked Up</th>
     </tr>
     <% merchant_orders.each do |order| %>
       <tr>
@@ -32,10 +33,28 @@
         <td><%= order.claim_to_pick_up_time %> minutes </td>
         <td><%= order.pick_up_to_delivery_time %> minutes </td>
         <td><%= order.claim_to_delivery_time %> minutes </td>
+        <% if order.claim_time == nil && order.pick_up_time == nil %>
+          <td>
+            Not yet claimed
+          </td>
+        <% elsif order.claim_time != nil && order.pick_up_time == nil %>
+          <td>
+            <form action="/merchants/<%= @merchant.id %>/orders/<%= order.id %>"method="post">
+              <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+              <input type="hidden" name="_method" value="patch"/>
+              <input type="hidden" name="orders[pick_up_time]" value="<%=Time.new %>"/>
+              <input type="submit" value="Picked Up"/>
+            </form>
+          </td>
+        <% else %>
+          <td>
+            Already picked up
+          </td>
+        <% end %>
       </tr>
       <% end %>
   </table>
-  <a href="/full_merchant_history"> Full History</a>
+  <a href="/merchants/<%= @merchant.id%>/full_merchant_history"> Full History</a>
 <% else %>
   <p>You do not have any orders to display</p>
 <% end %>

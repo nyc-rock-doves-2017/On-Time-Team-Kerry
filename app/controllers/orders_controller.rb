@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      redirect_to "/merchants/#{@order.merchant_id}/orders"
+      redirect_to "/merchants/#{@order.merchant_id}"
     else
       @errors = @order.errors.full_messages
       render status: 422, action: :new
@@ -26,9 +26,15 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find_by(id: params[:id])
-    @order.assign_attributes(update_order_params)
+    @order.update_attributes(update_order_params)
     if @order.save
-      redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+      if session[:type] == "contractor" && @order.delivery_time == nil
+        redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+      elsif session[:type] == "contractor" && @order.delivery_time != nil
+        redirect_to open_orders_path
+      else
+        redirect_to "/merchants/#{@order.merchant_id}/full_merchant_history"
+      end
     else
       @errors = @order.errors.full_messages
       render status: 422, action: :show
