@@ -33,8 +33,8 @@ end
   mercs[0..num].sample.orders.create(
     destination: Faker::Address.street_address,
     claim_time: Time.now,
-    pick_up_time: Time.now + rand(4..8).minutes,
-    delivery_time: Time.now + rand(15..30).minutes,
+    pick_up_time: Time.now + (rand(1..5)).minutes,
+    delivery_time: Time.now + (rand(5..27)).minutes,
     contractor: Contractor.all.sample
   )
 end
