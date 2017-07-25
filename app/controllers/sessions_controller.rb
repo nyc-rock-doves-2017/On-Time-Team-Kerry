@@ -24,7 +24,11 @@ class SessionsController < ApplicationController
         if @contractor.authenticate(params[:password])
           session[:user_id] = @contractor.id
           session[:type] = "contractor"
-          redirect_to open_orders_path
+          if in_good_standing?
+            redirect_to open_orders_path
+          else
+            redirect_to bad_performance_path
+          end
         else
           @errors = ["Incorrect email or password"]
           render status: 403, action: :new, layout: false
