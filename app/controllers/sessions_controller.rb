@@ -24,12 +24,16 @@ class SessionsController < ApplicationController
         if @contractor.authenticate(params[:password])
           session[:user_id] = @contractor.id
           session[:type] = "contractor"
-          open_orders = @contractor.orders.select { |o| o.delivery_time == nil }
-          if open_orders.length != 0
-            @order = open_orders[0]
-            redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+          if !in_good_standing?
+            redirect_to bad_performance_path
           else
-            redirect_to open_orders_path
+            open_orders = @contractor.orders.select { |o| o.delivery_time == nil }
+            if open_orders.length != 0
+              @order = open_orders[0]
+              redirect_to "/merchants/#{@order.merchant_id}/orders/#{@order.id}"
+            else
+              redirect_to open_orders_path
+            end
           end
         else
           @errors = ["Incorrect email or password"]

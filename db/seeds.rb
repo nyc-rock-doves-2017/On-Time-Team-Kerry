@@ -27,13 +27,36 @@ end
   )
 end
 
-25.times do
+100.times do
   mercs = Merchant.all
   num = mercs.length
   mercs[0..num].sample.orders.create(
     destination: Faker::Address.street_address,
-    claim_time: Time.now
+    claim_time: Time.now,
+    pick_up_time: Time.now + rand(4..8).minutes,
+    delivery_time: Time.now + rand(15..30).minutes,
+    contractor: Contractor.all.sample
   )
+end
+
+# TO TEST NO PAGE WITH FAIL GUY
+
+fail_guy = Contractor.create(
+  name: "Fail Guy",
+  email: 'i@fail.com',
+  password: "password",
+  status: true
+)
+
+10.times do
+  Order.create(
+  merchant: Merchant.all.sample,
+  destination: 'fail',
+  claim_time: Time.now,
+  pick_up_time: Time.now + rand(60).minutes,
+  delivery_time: Time.now + rand(120).minutes,
+  contractor: fail_guy
+                )
 end
 
 # Orders that have not been claimed
