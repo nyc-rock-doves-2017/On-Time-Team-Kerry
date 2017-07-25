@@ -2,6 +2,13 @@ Contractor.delete_all
 Merchant.delete_all
 Order.delete_all
 
+Contractor.create(
+  name: "Awaiting Assignment",
+  email: Faker::Internet.email,
+  password: "password",
+  status: true
+)
+
 20.times do
   Contractor.create(
     name: Faker::Ancient.primordial,

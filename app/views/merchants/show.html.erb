@@ -3,8 +3,8 @@
 <a href="<%= current_user.id %>/orders/new"><button>Enter New Order for Delivery</button></a>
 
 <h3>Average Delivery Times</h3>
-<% merchant_orders = Order.all.select { |o| o.delivery_time != nil} %>
-<% if merchant_orders.length > 0 %>
+<% merchant_orders = @merchant.orders %>
+<% if merchant_orders.length != 0 %>
   <p>Average Time: Claim to Pickup: <%= average_claim_to_pick_up_time %> minutes</p>
   <p>Average Time: Pickup to Delivery: <%= average_pick_up_to_delivery_time %> minutes</p>
   <p>Average Time: Claim to Delivery: <%= average_claim_to_delivery_time %> minutes</p>
