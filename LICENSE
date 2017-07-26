@@ -1,0 +1,20 @@
+This repository contains code from some open-source works.
+
+File Copyrights
+===============
+
+All files not explicitly mentioned below
+    What: OnTime
+    Source URL: https://github.com/nyc-rock-doves-2017/On-Time-Team-Kerry
+    Copyright: TBD
+    License: TBD
+    License text: TBD
+
+app/assets/javascripts/gauge.js
+app/assets/stylesheets/gauge.css
+app/views/merchants/show.html.erb
+    What: d3 gauge
+    Copyright: Zeno Rocha
+    Source URL: http://bl.ocks.org/msqr/3202712
+    License: MIT
+    License URL: http://bl.ocks.org/msqr/3202712
